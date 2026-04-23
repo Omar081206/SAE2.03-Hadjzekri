@@ -25,3 +25,25 @@ function readMoviesController(){
     $movies = getAllMovies();
     return $movies;
 }
+
+function addMovieController(){
+
+  $titre = $_REQUEST['titre'];
+  $real = $_REQUEST['realisateur'];
+  $annee = $_REQUEST['annee'];
+  $duree = $_REQUEST['duree'];
+  $desc = $_REQUEST['description'];
+  $cate = $_REQUEST['categorie'];
+  $img = $_REQUEST['affiche'];
+  $trailer = $_REQUEST['trailer'];
+  $age = $_REQUEST['age'];
+
+  $ok = addMenu($titre, $real, $annee, $duree, $desc, $cate, $img, $trailer, $age);
+  // $ok est le nombre de ligne affecté par l'opération de mise à jour dans la BDD (voir model.php)
+  if ($ok!=0){
+    return "Le film $titre est ajouté";
+  }
+  else{
+    return false;
+  }
+}

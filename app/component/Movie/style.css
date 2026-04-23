@@ -1,0 +1,36 @@
+
+.movie{
+  padding: 1rem;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    .card__img {
+        object-fit: cover;
+        border-radius: 0.5rem;
+    }
+
+    .card__title {
+        font-size: 2rem;
+        font-weight: 600;
+    }
+
+}
+
+.movie__list{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+
+}
+
+@media(min-width:48rem){
+    .movie__list{
+        grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
+
+    }
+
+}
+
