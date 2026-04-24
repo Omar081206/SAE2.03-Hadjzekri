@@ -1,0 +1,21 @@
+.addMovie{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    background-color: var(--color-fg);
+    .addMovie__form{
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 1rem;
+    }
+    .addMovie__input, .addMovie__select, .addMovie__btn{
+        max-width: 30rem;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        background-color: var(--color-fg);
+        border: solid 1px var(--color-bg);
+        color: var(--color-bg);
+    }
+    .addMovie__btn{
+        cursor: pointer;
+    }
+}

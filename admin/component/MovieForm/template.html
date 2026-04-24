@@ -1,29 +1,34 @@
-<div class="addMovie">
+<div class="addMovie font-mono">
     <p class="addMenu__title"># Ajouter un film</p>
     <form class="addMovie__form">
 
-        <input required type="text" name="titre" placeholder="Saisir le titre">
-        <input required type="text" name="realisateur" placeholder="Saisir le réalisateur">
-        <input required type="number" name="annee" placeholder="Saisir l'année de sortie">
-        <input required type="number" name="duree" placeholder="Saisir la durée en minutes">
-        <input required type="text" name="description" placeholder="Saisir la description">
-        <select name="categorie" required>
-            <option value="1">Action</option>
-            <option value="2">Comédie</option>
-            <option value="3">Drame</option>
-            <option value="4">Science-fiction</option>
-            <option value="5">Animation</option>
-            <option value="6">Thriller</option>
-            <option value="7">Horreur</option>
-            <option value="8">Aventure</option>
-            <option value="9">Fantaisie</option>
-            <option value="10">Documentaire</option>
+        <input class="addMovie__input" required type="text" name="titre" placeholder="Saisir le titre">
+        <input class="addMovie__input" required type="text" name="realisateur" placeholder="Saisir le réalisateur" pattern="[^0-9]*">
+        <input class="addMovie__input" required type="number" name="annee" placeholder="Saisir l'année de sortie">
+        <input class="addMovie__input" required type="number" name="duree" placeholder="Saisir la durée en minutes">
+        <textarea class="addMovie__input" name="description" placeholder="Saisir la description" ></textarea>
+        <select class="addMovie__select" name="categorie" required>
+            <option class="addMovie__option" value="1">Action</option>
+            <option class="addMovie__option" value="2">Comédie</option>
+            <option class="addMovie__option" value="3">Drame</option>
+            <option class="addMovie__option" value="4">Science-fiction</option>
+            <option class="addMovie__option" value="5">Animation</option>
+            <option class="addMovie__option" value="6">Thriller</option>
+            <option class="addMovie__option" value="7">Horreur</option>
+            <option class="addMovie__option" value="8">Aventure</option>
+            <option class="addMovie__option" value="9">Fantaisie</option>
+            <option class="addMovie__option" value="10">Documentaire</option>
         </select>
-        <input required type="text" name="affiche" placeholder="Saisir le nom du fichier de l'affiche ou image du film">
-        <input required type="text" name="trailer" placeholder="Saisir l'URL du trailer">
-        <input required type="number" name="age" placeholder="Saisir la restriction d'âge">
+        <input class="addMovie__input" required type="text" name="affiche" placeholder="Saisir le nom du fichier de l'affiche ou image du film">
+        <input class="addMovie__input" required type="text" name="trailer" placeholder="Saisir l'URL du trailer">
+        <select class="addMovie__select" name="age">
+            <option class="addMovie__option" value="10">Limite d'âge 10 ans</option>
+            <option class="addMovie__option" value="12">Limite d'âge 12 ans</option>
+            <option class="addMovie__option" value="16">Limite d'âge 16 ans</option>
+            <option class="addMovie__option" value="18">Limite d'âge 18 ans</option>
+        </select>
         
-        <input onclick="{{handler}}" type="button" value="Update" name="todo">
+        <input class="addMovie__btn" onclick="{{handler}}" type="button" value="Update" name="todo">
 
     </form>
 </div>
