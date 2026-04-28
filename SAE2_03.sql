@@ -81,6 +81,15 @@ INSERT INTO `Movie` (`id`, `name`, `year`, `length`, `description`, `director`, 
 -- Index pour les tables déchargées
 --
 
+CREATE TABLE `Profile` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `min_age` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)
+
+
 --
 -- Index pour la table `Category`
 --

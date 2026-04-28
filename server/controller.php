@@ -26,6 +26,16 @@ function readMoviesController(){
     return $movies;
 }
 
+function readCategoryController(){
+    $category = getAllCategory();
+    return $category;
+}
+
+function readProfileController(){
+    $profiles = getAllProfiles();
+    return $profiles;
+}
+
 function addMovieController(){
 
   $titre = $_REQUEST['titre'];
@@ -48,6 +58,22 @@ function addMovieController(){
   }
 }
 
+function addProfilController(){
+
+  $nom = $_REQUEST['nom'];
+  $img = $_REQUEST['avatar'];
+  $age = $_REQUEST['age'];
+
+  $ok = addProfile($nom, $img, $age);
+  if($ok!=0){
+    return "Le profil $nom est ajouté";
+  }
+  else{
+    return;
+  }
+
+}
+
 function readMovieDetailController(){
 
     $id = $_REQUEST['id'];
@@ -59,4 +85,17 @@ function readMovieDetailController(){
     } else {
         return false;
     }
+}
+
+function readMoviesByCategoryController(){
+    $movies = getAllMovies();
+    $category = [];
+    foreach($movies as $movie){
+        $CateName = $movie->category_name;
+        if (!isset($category[$CateName])){
+            $category[$CateName] = [];
+        }
+        $category[$CateName][] = $movie;
+    }
+    return $category;
 }

@@ -1,0 +1,14 @@
+<div class="addProfil">
+    <p class="addProfil__title"># Ajouter un profil</p>
+    <form class="addProfil__form">
+        <input class="addProfil__input" required type="text" name="nom" placeholder="Saisir un nom">
+        <input class="addProfil__input" required type="text" name="avatar" placeholder="Saisir le nom du fichier de l'avatar">
+        <select class="addProfil__input" name="age">
+            <option class="addProfil__input" value="10">Tout public</option>
+            <option class="addProfil__input" value="12">Limite d'âge 12 ans</option>
+            <option class="addProfil__input" value="16">Limite d'âge 16 ans</option>
+            <option class="addProfil__input" value="18">Limite d'âge 18 ans</option>
+        </select>
+        <input class="addProfil__btn" onclick="{{handler}}" type="button" value="Update" name="todo">
+    </form>
+</div>

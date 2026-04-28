@@ -14,7 +14,19 @@ define("DBPWD", "hadj-zekri1");
 
 function getAllMovies(){
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-    $sql = "select id, name, image from Movie";
+    $sql = "SELECT Movie.id, Movie.name, Movie.image, Category.name AS category_name 
+            FROM Movie 
+            INNER JOIN Category ON Movie.id_category = Category.id
+            ORDER BY Category.name, Movie.name";
+    $stmt = $cnx->prepare($sql);
+    $stmt->execute();
+    $res = $stmt->fetchAll(PDO::FETCH_OBJ);
+    return $res; 
+}
+
+function getAllCategory(){
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "select id, name from Category";
     $stmt = $cnx->prepare($sql);
     $stmt->execute();
     $res = $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -41,6 +53,21 @@ function addMovie($titre, $real, $annee, $duree, $desc, $cate, $img, $trailer, $
     return $res; 
 }
 
+function addProfile($nom, $img, $age){
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD); 
+    $sql = "INSERT INTO Profile (name, image, min_age)
+            VALUES (:nom, :img, :age)";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':nom', $nom);
+    $stmt->bindParam(':img', $img);
+    $stmt->bindParam(':age', $age);
+    $stmt->execute();
+
+    $res = $stmt->rowCount(); 
+    return $res; 
+}
+
+
 function getMovieDetails($id) {
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD); 
     
@@ -56,15 +83,13 @@ function getMovieDetails($id) {
     return $res; 
 }
 
-function getMoviesByCategory(){
-   $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-    $sql = "SELECT Movie.name, Movie.image, Category.name AS category_name 
-            FROM Movie 
-            INNER JOIN Category ON Movie.id_category = Category.id
-            ORDER BY Category.name";
-            
+function getAllProfiles(){
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT Profile.*  
+            FROM Profile";
+    
     $stmt = $cnx->prepare($sql);
     $stmt->execute();
-    $movies = $stmt->fetchAll(PDO::FETCH_OBJ); 
-    
+    $res = $stmt->fetchAll(PDO::FETCH_OBJ);
+    return $res;   
 }

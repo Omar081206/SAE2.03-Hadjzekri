@@ -15,5 +15,10 @@ DataMovie.addmovies = async function (fdata) {
     return data;
 }
 
+DataMovie.requestcategories = async function() {
+    let answer = await fetch(HOST_URL + "/server/script.php?todo=readcategory");
+    let data = await answer.json();
+    return data;    
+}
 
 export { DataMovie };
