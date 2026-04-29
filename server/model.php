@@ -69,6 +69,20 @@ function addProfile($nom, $img, $age){
     return $res; 
 }
 
+function updateProfile($id, $nom, $img, $age){
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD); 
+        $sql = "UPDATE Profile 
+            SET name = :nom, image = :img, min_age = :age 
+            WHERE id = :id"; 
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':nom', $nom);
+    $stmt->bindParam(':img', $img);
+    $stmt->bindParam(':age', $age);
+    $stmt->bindParam(':id', $id);   
+    $stmt->execute();
+    $res = $stmt->rowCount(); 
+    return $res; 
+}
 
 function getMovieDetails($id) {
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD); 
@@ -94,4 +108,44 @@ function getAllProfiles(){
     $stmt->execute();
     $res = $stmt->fetchAll(PDO::FETCH_OBJ);
     return $res;   
+}
+
+function getAllFavorite($profile) {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT Movie.* 
+            FROM Movie 
+            INNER JOIN Favorite ON Movie.id = Favorite.id_movie 
+            WHERE Favorite.id_profile = :profile";
+    
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':profile', $profile);
+    $stmt->execute();
+    $res = $stmt->fetchAll(PDO::FETCH_OBJ);
+    return $res;
+}
+
+function addFavorite($profile, $movie) {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "INSERT INTO Favorite (id_profile, id_movie) 
+            VALUES (:profile, :movie)";
+    
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':profile', $profile);
+    $stmt->bindParam(':movie', $movie);
+    $stmt->execute();
+    $res = $stmt->rowCount();
+    return $res;
+}
+
+function removeFavorite($profile, $movie) {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "DELETE FROM Favorite 
+    WHERE id_profile = :profile AND id_movie = :movie";
+    
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':profile', $profile);
+    $stmt->bindParam(':movie', $movie);
+    $stmt->execute();
+    $res = $stmt->rowCount();
+    return $res;
 }

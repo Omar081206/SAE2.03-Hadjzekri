@@ -12,6 +12,7 @@ MovieDetail.format = function (data) {
   html = html.replaceAll("{{année}}", data.year);
   html = html.replaceAll("{{caté}}", data.category_name);
   html = html.replaceAll("{{restri}}", data.min_age);
+  html = html.replaceAll("{{id}}", data.id);
   html = html.replaceAll("{{trailer}}", data.trailer);
   return html;
 };

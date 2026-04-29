@@ -19,9 +19,11 @@
       import { MovieCategory } from "./component/MovieCategory/script.js"
       import { DataMovie } from "./data/dataMovie.js";
       import { DataProfile } from "./data/dataProfile.js";
+      import { DataFavorite } from "./data/dataFavorite.js";
 
       let profiles = await DataProfile.requestProfiles();
       let currentFilteredMovies = null;
+      let content = document.querySelector("#content");
       content.innerHTML = "<h2 style='text-align:center; padding: 3rem;'>Veuillez sélectionner un profil pour découvrir le catalogue.</h2>";
 
       window.C = {};
@@ -63,6 +65,13 @@
         C.handlerHome(); 
       };
 
+      C.handlerAddFavorite = async function(id_movie) {
+
+        let id_profile = DataProfile.currentProfileId; 
+        let reponse = await DataProfile.addFavorite(id_profile, id_movie);
+        alert(reponse); 
+      };
+
       C.start = function () {
         V.renderNavBar("C.handlerHome()", "C.handlerLogout()", profiles);
       };
@@ -98,16 +107,7 @@
       }
       V.renderMoviesCategory = function (groupedData) {
           let content = document.querySelector("#content");
-          let html = "";
-          
-          for (let categoryObj of groupedData) {
-              
-              let moviesHtml = Movie.format(categoryObj.movies);
-              
-              html += MovieCategory.format(categoryObj.label, moviesHtml);
-          }
-          
-          content.innerHTML = html;
+          content.innerHTML = MovieCategory.format(groupedData);
       };
 
 

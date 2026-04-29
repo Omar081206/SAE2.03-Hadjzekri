@@ -16,9 +16,12 @@ DataMovie.requestMovies = async function(){
     return data;
 }
 
+DataMovie.currentMovies = null;
+
 DataMovie.requestMovieByCategory = async function(min_age){
     let answer = await fetch(HOST_URL + "/server/script.php?todo=readmoviesbycategory&min_age=" + min_age);
     let data = await answer.json();
+    DataMovie.currentMovies = data;
     return data;
 }
 
@@ -28,6 +31,14 @@ DataMovie.requestMovieDetails = async function(id){
     return data;
 }
 
+DataMovie.clearMovies = function() {
+    DataMovie.currentMovies = null;
+}
 
+
+DataMovie.cache = {
+    movies : [],
+    timestamp: -1
+}
 
 export {DataMovie};

@@ -74,6 +74,21 @@ function addProfilController(){
 
 }
 
+function updateProfileController(){
+    $nom = $_REQUEST['nom'];
+    $img = $_REQUEST['avatar'];
+    $age = $_REQUEST['age'];
+    $id = $_REQUEST['id'];
+
+    $ok = updateProfile($id, $nom, $img, $age);
+    if($ok!=0){
+        return "Le profil $nom est mis à jour";
+    }
+    else{
+        return false;
+    }
+}
+
 function readMovieDetailController(){
 
     $id = $_REQUEST['id'];
@@ -106,4 +121,35 @@ function readMoviesByCategoryController(){
     }
       
     return array_values($grouped);
+}
+
+function readFavoritesController(){
+    $profile = $_REQUEST['id_profile'];
+    
+    $favorites = getAllFavorite($profile);
+    return $favorites;
+}
+
+function addFavoriteController(){
+    $profile = $_REQUEST['id_profile'];
+    $movie = $_REQUEST['id_movie'];
+
+    $ok = addFavorite($profile, $movie);
+    if($ok != 0){
+        return "Film ajouté aux favoris";
+    } else {
+        return false;
+    }
+}
+
+function removeFavoriteController(){
+    $profile = $_REQUEST['id_profile'];
+    $movie = $_REQUEST['id_movie'];
+
+    $ok = removeFavorite($profile, $movie);
+    if($ok != 0){
+        return "Film retiré des favoris";
+    } else {
+        return false;
+    }
 }

@@ -1,14 +1,26 @@
+import { Movie } from "../Movie/script.js";
+
 let templateFile = await fetch("./component/MovieCategory/template.html");
 let template = await templateFile.text();
 
 let MovieCategory = {};
 
-MovieCategory.format = function (categoryName, moviesHtml) {
-    let html = template;
+MovieCategory.format = function(groupedData) {
+    let finalHtml = "";
     
-    html = html.replaceAll("{{titleCategory}}", categoryName)
-               .replaceAll("{{movies}}", moviesHtml);
-    return html;
+    for (let categoryObj of groupedData) {
+        
+        let html = template; 
+        
+        let moviesHtml = Movie.format(categoryObj.movies);
+        
+        html = html.replaceAll("{{titleCategory}}", categoryObj.label);
+        html = html.replaceAll("{{movies}}", moviesHtml);
+        
+        finalHtml += html;
+    }
+    
+    return finalHtml;
 };
 
 export { MovieCategory };
