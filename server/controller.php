@@ -88,14 +88,22 @@ function readMovieDetailController(){
 }
 
 function readMoviesByCategoryController(){
-    $movies = getAllMovies();
-    $category = [];
-    foreach($movies as $movie){
-        $CateName = $movie->category_name;
-        if (!isset($category[$CateName])){
-            $category[$CateName] = [];
+    $min_age = $_REQUEST['min_age'];
+    
+    $movies = getAllMovies($min_age);
+    
+    $grouped = [];
+    foreach ($movies as $movie) {
+        $nameCat = $movie->category_name;
+        
+        if (!isset($grouped[$nameCat])) {
+            $grouped[$nameCat] = [
+                "label" => $nameCat,
+                "movies" => []
+            ];
         }
-        $category[$CateName][] = $movie;
+        $grouped[$nameCat]["movies"][] = $movie;
     }
-    return $category;
+      
+    return array_values($grouped);
 }

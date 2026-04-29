@@ -12,13 +12,15 @@ define("DBLOGIN", "hadj-zekri1");
 define("DBPWD", "hadj-zekri1");
 
 
-function getAllMovies(){
+function getAllMovies($min_age){
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
     $sql = "SELECT Movie.id, Movie.name, Movie.image, Category.name AS category_name 
             FROM Movie 
             INNER JOIN Category ON Movie.id_category = Category.id
+            WHERE Movie.min_age <= :min_age
             ORDER BY Category.name, Movie.name";
     $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':min_age', $min_age);
     $stmt->execute();
     $res = $stmt->fetchAll(PDO::FETCH_OBJ);
     return $res; 

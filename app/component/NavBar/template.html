@@ -1,6 +1,10 @@
 <nav class="navbar font-sans">
   <ul class="navbar__list">
     <li class="navbar__item" onclick="{{hHome}}">Home</li>
-    <li class="navbar__item" onclick="{{hProfile}}">Profiles</li>
+    <li class="navbar__item" onclick="{{hLogout}}">LogOut</li>
   </ul>
+  <select class="navbar__item" onchange="C.handlerProfile(this.value)">
+    <option value="">Choisir un profil</option>
+    {{ProfileList}}
+  </select>
 </nav>

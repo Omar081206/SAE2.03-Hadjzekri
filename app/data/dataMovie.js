@@ -16,8 +16,8 @@ DataMovie.requestMovies = async function(){
     return data;
 }
 
-DataMovie.requestMovieByCategory = async function(){
-    let answer = await fetch(HOST_URL + "/server/script.php?todo=readmoviesbycategory");
+DataMovie.requestMovieByCategory = async function(min_age){
+    let answer = await fetch(HOST_URL + "/server/script.php?todo=readmoviesbycategory&min_age=" + min_age);
     let data = await answer.json();
     return data;
 }
