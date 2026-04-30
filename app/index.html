@@ -48,15 +48,10 @@
             currentFilteredMovies = null; 
             C.handlerHome(); 
         }
-        let currentProfile = null;
-        for (let p of profiles) {
-        if (p.id == id_profile) {
-            currentProfile = p; 
-        }
-      }
-      currentFilteredMovies = await DataMovie.requestMovieByCategory(currentProfile.min_age);
+        let currentProfile = DataProfile.currentProfile(profiles, id_profile);
+        currentFilteredMovies = await DataMovie.requestMovieByCategory(currentProfile.min_age);
         
-      V.renderMoviesCategory(currentFilteredMovies);
+        V.renderMoviesCategory(currentFilteredMovies);
       };
 
       C.handlerLogout = function() {
