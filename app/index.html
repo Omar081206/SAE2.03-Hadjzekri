@@ -68,12 +68,14 @@
 
       C.handlerAddFavorite = async function(id_movie) {
         await DataFavorite.addFavorite(currentProfileId, id_movie);
+        alert("Film ajouté aux favoris ");
         currentFavorites = await DataFavorite.requestfavorites(currentProfileId);
         V.renderFavoritesAndMovies(currentFavorites, currentFilteredMovies);
       };
 
       C.handlerRemoveFavorite = async function(id_movie) {
         await DataFavorite.removeFavorite(currentProfileId, id_movie);
+        alert("Film retiré des favoris ");
         currentFavorites = await DataFavorite.requestfavorites(currentProfileId);
         V.renderFavoritesAndMovies(currentFavorites, currentFilteredMovies);
       };
@@ -114,7 +116,7 @@
           let html = MovieCategory.format(groupedMovies);
           let favoritesHtml = Favorite.format(favorites);
           if (favoritesHtml) {
-              html += "<hr>" + favoritesHtml;
+              html += favoritesHtml;
           }
           
           content.innerHTML = html;

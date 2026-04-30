@@ -35,10 +35,4 @@ DataMovie.clearMovies = function() {
     DataMovie.currentMovies = null;
 }
 
-
-DataMovie.cache = {
-    movies : [],
-    timestamp: -1
-}
-
 export {DataMovie};

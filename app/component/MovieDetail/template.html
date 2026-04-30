@@ -6,6 +6,6 @@
     <p class="moviedetail__info">Date de sortie : {{année}}</p>
     <p class="moviedetail__info">Catégorie : {{caté}}</p>
     <p class="moviedetail__info">Age minimum : {{restri}} ans</p>
-    {{favoriteButton}}
+    <button class="moviedetail__btn" onclick="{{favoriteHandler}}">{{favoriteText}}</button>
     <iframe class="moviedetail__trailer" src="{{trailer}}" frameborder="0"></iframe>
 </section>

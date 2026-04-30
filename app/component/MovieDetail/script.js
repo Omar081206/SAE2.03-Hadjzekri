@@ -17,11 +17,19 @@ MovieDetail.format = function (data, favorites = []) {
   
   // Vérifier si le film est dans les favoris
   let isFavorite = favorites.some(fav => fav.id == data.id);
-  let buttonText = isFavorite ? "Enlever des favoris" : "Ajouter aux favoris";
-  let buttonHandler = isFavorite ? `C.handlerRemoveFavorite('${data.id}')` : `C.handlerAddFavorite('${data.id}')`;
-  let favoriteButton = `<button class="moviedetail__btn" onclick="${buttonHandler}">${buttonText}</button>`;
+  let favoriteHandler;
+  let favoriteText;
   
-  html = html.replaceAll("{{favoriteButton}}", favoriteButton);
+  if (isFavorite) {
+    favoriteHandler = "C.handlerRemoveFavorite('" + data.id + "')";
+    favoriteText = "Enlever des favoris";
+  } else {
+    favoriteHandler = "C.handlerAddFavorite('" + data.id + "')";
+    favoriteText = "Ajouter aux favoris";
+  }
+  
+  html = html.replaceAll("{{favoriteHandler}}", favoriteHandler);
+  html = html.replaceAll("{{favoriteText}}", favoriteText);
   return html;
 };
 
