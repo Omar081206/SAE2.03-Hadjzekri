@@ -20,4 +20,5 @@ DataFavorite.removeFavorite = async function(id_profile, id_movie) {
     let data = await answer.json();
     return data; 
 };
+
 export { DataFavorite };

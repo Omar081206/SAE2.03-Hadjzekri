@@ -14,15 +14,17 @@
 
     <script type="module">
       import { NavBar } from "./component/NavBar/script.js";
-      import { Movie } from "./component/Movie/script.js";
       import { MovieDetail } from "./component/MovieDetail/script.js";
-      import { MovieCategory } from "./component/MovieCategory/script.js"
+      import { MovieCategory } from "./component/MovieCategory/script.js";
+      import { Favorite } from "./component/Favorite/script.js";
       import { DataMovie } from "./data/dataMovie.js";
       import { DataProfile } from "./data/dataProfile.js";
       import { DataFavorite } from "./data/dataFavorite.js";
 
       let profiles = await DataProfile.requestProfiles();
       let currentFilteredMovies = null;
+      let currentProfileId = null;
+      let currentFavorites = null;
       let content = document.querySelector("#content");
       content.innerHTML = "<h2 style='text-align:center; padding: 3rem;'>Veuillez sélectionner un profil pour découvrir le catalogue.</h2>";
 
@@ -30,7 +32,7 @@
 
       C.handlerDetails = async function(id_film){
         let details = await DataMovie.requestMovieDetails(id_film);
-        V.renderMovieDetails(details);
+        V.renderMovieDetails(details, currentFavorites);
       }
 
       C.handlerHome = function(){
@@ -45,13 +47,17 @@
 
       C.handlerProfile = async function(id_profile) {
         if (!id_profile) {
-            currentFilteredMovies = null; 
+            currentFilteredMovies = null;
+            currentProfileId = null;
+            currentFavorites = null;
             C.handlerHome(); 
         }
-        let currentProfile = DataProfile.currentProfile(profiles, id_profile);
+        currentProfileId = id_profile;
+        let currentProfile = DataProfile.getProfileById(id_profile, profiles);
         currentFilteredMovies = await DataMovie.requestMovieByCategory(currentProfile.min_age);
+        currentFavorites = await DataFavorite.requestfavorites(id_profile);
         
-        V.renderMoviesCategory(currentFilteredMovies);
+        V.renderFavoritesAndMovies(currentFavorites, currentFilteredMovies);
       };
 
       C.handlerLogout = function() {
@@ -61,10 +67,15 @@
       };
 
       C.handlerAddFavorite = async function(id_movie) {
+        await DataFavorite.addFavorite(currentProfileId, id_movie);
+        currentFavorites = await DataFavorite.requestfavorites(currentProfileId);
+        V.renderFavoritesAndMovies(currentFavorites, currentFilteredMovies);
+      };
 
-        let id_profile = DataProfile.currentProfileId; 
-        let reponse = await DataProfile.addFavorite(id_profile, id_movie);
-        alert(reponse); 
+      C.handlerRemoveFavorite = async function(id_movie) {
+        await DataFavorite.removeFavorite(currentProfileId, id_movie);
+        currentFavorites = await DataFavorite.requestfavorites(currentProfileId);
+        V.renderFavoritesAndMovies(currentFavorites, currentFilteredMovies);
       };
 
       C.start = function () {
@@ -88,21 +99,25 @@
         let header = document.querySelector("#header");
         header.innerHTML = NavBar.format(hHome, hLogout, hProfile);
       };
-      V.renderMovies = function(data){
+
+      V.renderMovieDetails = function(data, favorites = []){
         let content = document.querySelector("#content");
-        content.innerHTML = Movie.format(data);
-      }
-      V.renderProfiles = function(data){
-        let content = document.querySelector("#content");
-        content.innerHTML = Profile.format(data);
-      }
-      V.renderMovieDetails = function(data){
-        let content = document.querySelector("#content");
-        content.innerHTML = MovieDetail.format(data);
+        content.innerHTML = MovieDetail.format(data, favorites);
       }
       V.renderMoviesCategory = function (groupedData) {
           let content = document.querySelector("#content");
           content.innerHTML = MovieCategory.format(groupedData);
+      };
+      
+      V.renderFavoritesAndMovies = function(favorites, groupedMovies) {
+          let content = document.querySelector("#content");
+          let html = MovieCategory.format(groupedMovies);
+          let favoritesHtml = Favorite.format(favorites);
+          if (favoritesHtml) {
+              html += "<hr>" + favoritesHtml;
+          }
+          
+          content.innerHTML = html;
       };
 
 

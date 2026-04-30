@@ -32,14 +32,13 @@ DataProfile.update = async function (pdata) {
     return data;
 }
 
-DataProfile.currentProfile = function(pdata, id_profile){
-        let currentProfile = null;
-        for (let p of pdata) {
-        if (p.id == id_profile) {
-            currentProfile = p; 
+DataProfile.getProfileById = function(id, profiles) {
+    for (let p of profiles) {
+        if (p.id == id) {
+            return p;
         }
-        return currentProfile;
-}
+    }
+    return null;
 }
 
 export { DataProfile };
