@@ -49,7 +49,6 @@ function addMovieController(){
   $age = $_REQUEST['age'];
 
   $ok = addMovie($titre, $real, $annee, $duree, $desc, $cate, $img, $trailer, $age);
-  // $ok est le nombre de ligne affecté par l'opération de mise à jour dans la BDD (voir model.php)
   if ($ok!=0){
     return "Le film $titre est ajouté";
   }
