@@ -7,9 +7,9 @@
  */
 
 define("HOST", "localhost");
-define("DBNAME", "hadj-zekri1");
-define("DBLOGIN", "hadj-zekri1");
-define("DBPWD", "hadj-zekri1");
+define("DBNAME", "SAE203");
+define("DBLOGIN", "omar");
+define("DBPWD", "*HZomar2006*");
 
 
 function getAllMovies($min_age){
